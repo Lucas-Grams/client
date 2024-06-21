@@ -52,7 +52,6 @@ export class FormClientsComponent implements OnInit {
             this.clienteService.getCliente(this.uuid).subscribe((response) => {
                 if (response.status === "SUCCESS") {
                     this.cliente = response.data;
-                    console.log(this.cliente);
                     this.formGroup.patchValue(this.cliente);
                 }
             });
@@ -60,8 +59,8 @@ export class FormClientsComponent implements OnInit {
 
         this.tagService.getTags().subscribe((response) => {
             if (response.status === "SUCCESS") {
-                response.data.forEach((tag: Tag) => {
-                    tag.ativo ? this.tags.push(tag) : null;
+                if(response.data) response.data.forEach((tag: Tag) => {
+                    if (tag.ativo) this.tags.push(tag)
                 });
             }
         });

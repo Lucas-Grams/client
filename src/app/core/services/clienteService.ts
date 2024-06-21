@@ -24,7 +24,6 @@ export class ClienteService {
     }
 
     postCliente(cliente: Cliente): Observable<ResponseDTO<string>>{
-        console.log('service front')
         return this.http.post<ResponseDTO<string>>(`${environment.apiUrl}/clientes`, cliente);
     }
 

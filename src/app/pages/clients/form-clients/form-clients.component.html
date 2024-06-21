@@ -21,15 +21,17 @@
                        formControlName="email">
                 <p *ngIf="formInvalid" class="text-danger">O e-mail do cliente é obrigatório!</p>
             </div>
-            <ng-container *ngIf="tags.length > 0; else noTags">
-                <div class="d-flex align-items-center mt-5">
-                    <h4>Tags do Cliente</h4>
-                </div>
-                <div class="mb-3 form-check form-check-inline" *ngFor="let tag of tags">
-                    <input type="checkbox" class="form-check-input" id="{{tag.id}}"
-                           [checked]="checkTag(tag)" (change)="addTag(tag)">
-                    <label class="form-check-label" for="{{tag.id}}">{{ tag.nome }}</label>
-                </div>
+            <ng-container *ngIf="tags; else noTags">
+                <ng-container *ngIf="tags.length > 0; else noTags">
+                    <div class="d-flex align-items-center mt-5">
+                        <h4>Tags do Cliente</h4>
+                    </div>
+                    <div class="mb-3 form-check form-check-inline" *ngFor="let tag of tags">
+                        <input type="checkbox" class="form-check-input" id="{{tag.id}}"
+                               [checked]="checkTag(tag)" (change)="addTag(tag)">
+                        <label class="form-check-label" for="{{tag.id}}">{{ tag.nome }}</label>
+                    </div>
+                </ng-container>
             </ng-container>
             <ng-template #noTags>
                 <div class="alert alert-warning" role="alert">

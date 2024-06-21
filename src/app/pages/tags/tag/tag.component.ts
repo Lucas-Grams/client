@@ -65,6 +65,7 @@ export class TagComponent implements OnInit {
                 (res) => {
                     Swal.fire({"title":"Tag cadastrada com sucesso","icon":"success"});
                     this.form.reset();
+                    this.editing = false;
                     this.loadAll();
                 },
                 ({ error }) => {
