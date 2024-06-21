@@ -8,8 +8,6 @@ import {Component, OnInit} from "@angular/core";
 export class PrincipalComponent implements OnInit {
 
   isLoading = false;
-  option: number = 1;
-  uuid?: string;
 
   constructor() { }
 

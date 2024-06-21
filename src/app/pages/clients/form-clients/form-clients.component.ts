@@ -18,6 +18,7 @@ export class FormClientsComponent implements OnInit {
 
     loading: boolean = false;
     formInvalid = false;
+    isEditing: boolean = false;
 
     formGroup: FormGroup = new FormGroup({});
     cliente: Cliente = new Cliente();
@@ -35,6 +36,7 @@ export class FormClientsComponent implements OnInit {
             const uuid = this.route.snapshot.paramMap.get('uuid');
             if (uuid !== null) {
                 this.uuid = uuid;
+                this.isEditing = true;
             }
         }
 

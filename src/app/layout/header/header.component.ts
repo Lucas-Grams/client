@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {ActivatedRoute, Router, UrlSegment} from "@angular/router";
+import {Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-header',
@@ -17,19 +17,9 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private route: ActivatedRoute
     ) {}
 
-    ngOnInit(): void {
-        const option = this.options.find(option => option.value === 2);
-        if (option) {
-            if (this.route.snapshot.paramMap.has('uuid')) {
-                option.label = 'Editar Cliente';
-            } else {
-                option.label = 'Cadastrar Cliente';
-            }
-        }
-    }
+    ngOnInit(): void {}
 
     onChange(event: number) {
         let route;

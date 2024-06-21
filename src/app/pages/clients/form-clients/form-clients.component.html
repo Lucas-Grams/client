@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center mt-5">
-    <h4>Cadastrar Clientes</h4>
+    <h4>{{ isEditing? 'Atualizar': 'Cadastrar' }} Clientes</h4>
 </div>
 <div *ngIf="loading; else content">
     <app-loading></app-loading>
