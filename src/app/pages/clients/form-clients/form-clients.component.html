@@ -1,0 +1,46 @@
+<div class="d-flex align-items-center mt-5">
+    <h4>Cadastrar Clientes</h4>
+</div>
+<div *ngIf="loading; else content">
+    <app-loading></app-loading>
+</div>
+
+<ng-template #content>
+    <div class="conteiner mt-5">
+        <form [formGroup]="formGroup">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome do Cliente</label>
+                <input type="text" class="form-control" id="nome" placeholder="Insira o nome do cliente"
+                       formControlName="nome">
+                <p *ngIf="formInvalid" class="text-danger">O nome do cliente é obrigatório!</p>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail do Cliente</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                       placeholder="email@email.com"
+                       formControlName="email">
+                <p *ngIf="formInvalid" class="text-danger">O e-mail do cliente é obrigatório!</p>
+            </div>
+            <ng-container *ngIf="tags.length > 0; else noTags">
+                <div class="d-flex align-items-center mt-5">
+                    <h4>Tags do Cliente</h4>
+                </div>
+                <div class="mb-3 form-check form-check-inline" *ngFor="let tag of tags">
+                    <input type="checkbox" class="form-check-input" id="{{tag.id}}"
+                           [checked]="checkTag(tag)" (change)="addTag(tag)">
+                    <label class="form-check-label" for="{{tag.id}}">{{ tag.nome }}</label>
+                </div>
+            </ng-container>
+            <ng-template #noTags>
+                <div class="alert alert-warning" role="alert">
+                    Nenhuma tag cadastrada
+                </div>
+            </ng-template>
+            <br>
+            <button class="btn btn-outline-primary text-end" title="Salvar dados do Cliente" (click)="salvar()">
+                <i class="fa-solid fa-floppy-disk mr-1"></i>
+                salvar
+            </button>
+        </form>
+    </div>
+</ng-template>

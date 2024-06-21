@@ -1,0 +1,34 @@
+<app-header
+    [(option)]="option"
+    [(uuid)]="uuid"
+></app-header>
+
+<div *ngIf="isLoading; else content">
+    <app-loading></app-loading>
+</div>
+
+<ng-template #content>
+    <div class="container">
+        <div *ngIf="option == 1">
+            <app-list-clients
+                [(option)]="option"
+                [(uuid)]="uuid"
+            ></app-list-clients>
+        </div>
+        <div *ngIf="option == 2">
+            <app-form-clients
+                [(option)]="option"
+                [(uuid)]="uuid"
+            ></app-form-clients>
+        </div>
+        <div *ngIf="option == 3">
+            teste3
+        </div>
+        <div *ngIf="option == 4">
+            teste4
+        </div>
+        <div *ngIf="option == 5">
+            <app-tag></app-tag>
+        </div>
+    </div>
+</ng-template>

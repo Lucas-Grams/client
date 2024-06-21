@@ -1,0 +1,98 @@
+<div class="d-flex align-items-center mt-5">
+    <h4>Gerenciar Tags</h4>
+</div>
+<div *ngIf="loading; else content">
+    <app-loading></app-loading>
+</div>
+
+<ng-template #content>
+    <form [formGroup]="form" class="row mt-3" (submit)="submit()">
+
+        <div class="row">
+            <label for="nomeTag" class="form-label">Descrição da Tag</label>
+            <div class="col-8">
+                <input type="text" class="form-control" id="nomeTag" placeholder="Insira o a descrição da tag"
+                       formControlName="nome">
+                <p *ngIf="formInvalid" class="text-danger">A descrição é obrigatória!</p>
+            </div>
+
+            <div class="col-4">
+                <ng-container *ngIf="!editing">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button
+                            type="submit"
+                            class="btn btn-outline-primary me-md-2"
+                            [disabled]="loading"
+                        >
+                            <i class="fa-solid fa-plus mr-1"></i>
+                            Adicionar
+                        </button>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="editing">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button
+                            type="submit"
+                            class="btn btn-outline-success me-md-2"
+                            [disabled]="loading"
+                        >
+                            <i class="fa-solid fa-floppy-disk mr-1"></i>
+                            Salvar
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-outline-warning gap-2"
+                            (click)="performAction('CANCEL')"
+                        >
+                            <i class="fa-solid fa-xmark mr-1"></i>
+                            Cancelar
+                        </button>
+                    </div>
+                </ng-container>
+            </div>
+
+        </div>
+
+    </form>
+    <div class="container mt-5">
+        <table class="table" *ngIf="tags.length > 0; else noContent">
+            <thead>
+            <tr>
+                <th scope="col">Ativo</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Ações</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let tg of tags">
+            <tr>
+                <th scope="row">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="ativo" [checked]="tg.ativo"
+                               (change)="performAction('TOGGLE', tg, !tg.ativo)">
+                    </div>
+
+                </th>
+                <td [class]="!tg.ativo? 'text-danger': ''">{{ tg.nome }}</td>
+                <td>
+                    <button
+                        type="button"
+                        class="btn"
+                        [class]="!tg.ativo? 'btn-outline-danger': 'btn-outline-secondary'"
+                        (click)="performAction('EDIT', tg)"
+                    >
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        Editar
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <ng-template #noContent>
+            <div class="alert alert-warning" role="alert">
+                Nenhuma Tag cadastrada, contate um administrador ou o suporte!
+            </div>
+        </ng-template>
+
+    </div>
+</ng-template>
