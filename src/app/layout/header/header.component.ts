@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: 'app-header',
@@ -11,22 +11,32 @@ export class HeaderComponent implements OnInit {
     options = [
         {label: 'Gerenciar Clientes', value: 1},
         {label: 'Cadastrar Clientes', value: 2},
-        {label: 'Gerenciar Usuários', value: 3},
-        {label: 'Cadastrar Usuários', value: 4},
-        {label: 'Gerenciar Tags', value: 5},
+        {label: 'Gerenciar Tags', value: 3},
     ];
+    option: number = 1;
 
-    @Input() option?: number;
-    @Input() uuid?: string;
-    @Output() optionChange = new EventEmitter<number>();
-    @Output() uuidChange = new EventEmitter
-
-    constructor() {}
+    constructor(
+        private router: Router
+    ) {}
 
     ngOnInit(): void {}
 
     onChange(event: number) {
-        this.uuidChange.emit(undefined);
-        this.optionChange.emit(event);
+        let route;
+        switch (event) {
+            case 1:
+                route = '/gerenciar-clientes'
+                this.option = 1;
+                break;
+            case 2:
+                route = '/cadastrar-cliente'
+                this.option = 2;
+                break;
+            case 3:
+                route = '/gerenciar-tags'
+                this.option = 3;
+                break;
+        }
+        this.router.navigate([route]);
     }
 }

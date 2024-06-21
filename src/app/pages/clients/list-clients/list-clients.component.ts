@@ -6,6 +6,7 @@ import {Tag} from "../../../core/models/tag.model";
 import {forkJoin} from "rxjs";
 import {TagService} from "../../../core/services/tagService";
 import {ClienteTag} from "../../../core/models/cliente-tag.model";
+import {Router} from "@angular/router";
 
 type Action = "DELETE" | "EDIT" | "TOGGLE";
 
@@ -28,6 +29,7 @@ export class ListClientsComponent implements OnInit {
     @Output() uuidChange = new EventEmitter<string>();
 
     constructor(
+        private router: Router,
         private clienteService: ClienteService,
         private tagService: TagService
     ) {
@@ -86,9 +88,7 @@ export class ListClientsComponent implements OnInit {
                 break;
             }
             case "EDIT": {
-                console.log(element);
-                this.uuidChange.emit(element?.uuid);
-                this.optionChange.emit(2);
+                this.router.navigate(['/editar-cliente', element?.uuid]);
                 break;
             }
             case "TOGGLE": {

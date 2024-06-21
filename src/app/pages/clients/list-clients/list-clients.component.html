@@ -9,7 +9,7 @@
         <table class="table" *ngIf="clientes.length > 0; else noContent">
             <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Ativo</th>
                 <th scope="col">Nome</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Tags</th>
@@ -25,12 +25,12 @@
                                [checked]="client.ativo" (change)="performAction('TOGGLE', client, !client.ativo)">
                     </div>
                 </th>
-                <td>{{ client.nome }}</td>
-                <td>{{ client.email }}</td>
+                <td [class]="!client.ativo? 'text-danger': ''">{{ client.nome }}</td>
+                <td [class]="!client.ativo? 'text-danger': ''">{{ client.email }}</td>
                 <td>
                     <div class="tag-container">
                         <ng-container *ngFor="let tag of client.clienteTags">
-                            <p class="tag">{{ checkNameTag(tag) }}</p>
+                            <p class="tag" [class]="!client.ativo? 'text-danger': ''">{{ checkNameTag(tag) }}</p>
                         </ng-container>
                     </div>
                 </td>

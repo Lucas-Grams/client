@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Cliente} from "../../../core/models/cliente.model";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Tag} from "../../../core/models/tag.model";
 import {ClienteService} from "../../../core/services/clienteService";
 
@@ -22,19 +22,22 @@ export class FormClientsComponent implements OnInit {
     formGroup: FormGroup = new FormGroup({});
     cliente: Cliente = new Cliente();
     tags: Tag[] = [];
-
-    @Input() option?: number;
-    @Input() uuid?: string;
-
-    @Output() optionChange = new EventEmitter<number>();
-    @Output() uuidChange = new EventEmitter<string>();
+    uuid?: string;
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
+        private router: Router,
         private clienteService: ClienteService,
         private tagService: TagService
     ) {
+        if (this.route.snapshot.paramMap.has('uuid')) {
+            const uuid = this.route.snapshot.paramMap.get('uuid');
+            if (uuid !== null) {
+                this.uuid = uuid;
+            }
+        }
+
     }
 
 
@@ -106,14 +109,14 @@ export class FormClientsComponent implements OnInit {
                     Swal.fire('Sucesso', `Cliente ${this.cliente.id ? 'atualizado' : 'cadastrado'} com sucesso`, 'success');
                     this.formGroup.reset();
                     this.formGroup.markAsUntouched();
-                    this.uuidChange.emit(undefined);
-                    this.optionChange.emit(1);
+
                 },
                 (error) => {
                     console.log(error);
                     Swal.fire('Erro', 'Ocorreu um erro ao cadastrar o cliente, tente novamente ou contate o suporte!', 'error');
                 },
                 () => {
+                    this.router.navigate(['/gerenciar-clientes']);
                 }
             );
         } else {
