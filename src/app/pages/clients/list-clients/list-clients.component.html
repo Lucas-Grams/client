@@ -7,12 +7,22 @@
 <ng-template #content>
     <div class="container mt-5">
         <ng-container *ngIf="clientes; else noContent">
-            <table class="table" *ngIf="clientes.length > 0; else noContent">
+            <div class="mb-3 search-container">
+                <input type="text" class="form-control search-input"
+                       placeholder="Para buscar um cliente use o nome ou e-mail (mínimo de 3 caracteres)."
+                       (keyup)="onSearch()" [(ngModel)]="search">
+                <span class="search-icon">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
+            <table class="table" *ngIf="clientes.length > 0; else noClients">
                 <thead>
                 <tr>
                     <th scope="col">Ativo</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">E-mail</th>
+                    <th scope="col">Nome <i class="fa-solid fa-sort" title="Ordenar por nome"
+                                            (click)="sortClients('nome')"></i></th>
+                    <th scope="col">E-mail <i class="fa-solid fa-sort" title="Ordenar por email"
+                                              (click)="sortClients('email')"></i></th>
                     <th scope="col">Tags</th>
                     <th scope="col">Ações</th>
                 </tr>
@@ -50,6 +60,11 @@
                 </tr>
                 </tbody>
             </table>
+            <ng-template #noClients>
+                <div class="alert alert-warning" role="alert">
+                    Não encontramos clientes com esses dados!
+                </div>
+            </ng-template>
         </ng-container>
 
         <ng-template #noContent>

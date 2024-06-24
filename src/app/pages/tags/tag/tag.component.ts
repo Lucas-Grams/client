@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Tag} from "../../../core/models/tag.model";
 import {TagService} from "../../../core/services/tagService";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import Swal from "sweetalert2";
 
@@ -25,7 +25,8 @@ export class TagComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private tagService: TagService,
-    ) {}
+    ) {
+    }
 
     ngOnInit() {
         this.buildForm();
@@ -42,7 +43,7 @@ export class TagComponent implements OnInit {
     loadAll() {
         this.loading = true;
         this.tagService.getTags().subscribe((response) => {
-            if(response.data){
+            if (response.data) {
                 this.tags = response.data;
             }
         });
@@ -51,11 +52,11 @@ export class TagComponent implements OnInit {
 
     submit() {
         if (!this.form.valid) {
-                this.formInvalid = true;
-                setTimeout(() => {
-                    this.formInvalid = false;
-                }, 3000);
-                return
+            this.formInvalid = true;
+            setTimeout(() => {
+                this.formInvalid = false;
+            }, 3000);
+            return
         }
 
         this.loading = true;
@@ -63,13 +64,13 @@ export class TagComponent implements OnInit {
         if (this.editing) {
             this.tagService.postTag(this.form.getRawValue()).subscribe(
                 (res) => {
-                    Swal.fire({"title":"Tag cadastrada com sucesso","icon":"success"});
+                    Swal.fire({"title": res.msg, "icon": "success"});
                     this.form.reset();
                     this.editing = false;
                     this.loadAll();
                 },
-                ({ error }) => {
-                    Swal.fire({"title":error.message,"icon":"error"});
+                ({error}) => {
+                    Swal.fire({"title": error.message, "icon": "error"});
                 },
                 () => {
                     this.loading = false;
@@ -81,12 +82,12 @@ export class TagComponent implements OnInit {
 
         this.tagService.postTag(this.form.getRawValue()).subscribe(
             (res) => {
-                Swal.fire({"title":res.msg,"icon":"success"});
+                Swal.fire({"title": res.msg, "icon": "success"});
                 this.form.reset();
                 this.loadAll();
             },
-            ({ error }) => {
-                Swal.fire({"title":error.message,"icon":"error"});
+            ({error}) => {
+                Swal.fire({"title": error.message, "icon": "error"});
             },
             () => {
                 this.loading = false;
@@ -103,7 +104,7 @@ export class TagComponent implements OnInit {
             }
             case "EDIT": {
                 this.editing = true;
-                if(element) this.form.patchValue(element);
+                if (element) this.form.patchValue(element);
                 break;
             }
             case "TOGGLE": {
@@ -121,8 +122,8 @@ export class TagComponent implements OnInit {
                         });
                         this.loadAll();
                     },
-                    ({ error }) => {
-                        Swal.fire({"title":error.message,"icon":"error"});
+                    ({error}) => {
+                        Swal.fire({"title": error.message, "icon": "error"});
                         element.ativo = oldValue;
                     }
                 );

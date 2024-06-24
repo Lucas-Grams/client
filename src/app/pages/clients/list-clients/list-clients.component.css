@@ -11,3 +11,24 @@
     align-items: center;
     border: 1px solid black;
 }
+
+.search-container {
+    position: relative;
+}
+
+.search-input {
+    padding-right: 30px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #aaa;
+}
+
+.search-icon .fa {
+    font-size: 16px;
+}

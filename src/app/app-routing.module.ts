@@ -1,10 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ListClientsComponent} from "./pages/clients/list-clients/list-clients.component";
-import {PrincipalComponent} from "./pages/principal/principal.component";
-import {FormClientsComponent} from "./pages/clients/form-clients/form-clients.component";
 import {TagComponent} from "./pages/tags/tag/tag.component";
 import {NotFoundComponent} from "./layout/not-found/not-found.component";
+import {ListClientsComponent} from "./pages/clients/list-clients/list-clients.component";
+import {FormClientsComponent} from "./pages/clients/form-clients/form-clients.component";
 
 const routes: Routes = [
     {

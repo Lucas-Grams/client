@@ -1,13 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Cliente} from "../../../core/models/cliente.model";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Tag} from "../../../core/models/tag.model";
-import {ClienteService} from "../../../core/services/clienteService";
-
+import {Component, OnInit} from "@angular/core";
 import Swal from "sweetalert2";
+import {Tag} from "../../../core/models/tag.model";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Cliente} from "../../../core/models/cliente.model";
 import {TagService} from "../../../core/services/tagService";
 import {ClienteTag} from "../../../core/models/cliente-tag.model";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ClienteService} from "../../../core/services/clienteService";
 
 @Component({
     selector: 'app-form-clients',
@@ -41,7 +40,6 @@ export class FormClientsComponent implements OnInit {
         }
 
     }
-
 
     ngOnInit() {
         this.buildForm();
@@ -100,26 +98,32 @@ export class FormClientsComponent implements OnInit {
         }
     }
 
-
     salvar() {
         this.formGroup.get('clienteTags')?.setValue(this.cliente.clienteTags);
         if (this.formGroup.valid) {
             this.cliente = this.formGroup.getRawValue();
-            this.clienteService.postCliente(this.cliente).subscribe(
-                (response) => {
-                    Swal.fire('Sucesso', `Cliente ${this.cliente.id ? 'atualizado' : 'cadastrado'} com sucesso`, 'success');
-                    this.formGroup.reset();
-                    this.formGroup.markAsUntouched();
+            Swal.fire({"title": `Deseja realmente ${this.cliente.id? 'atualizar': 'cadastrar'} o cliente?`, "icon": "warning",
+                "showCancelButton": true, "confirmButtonText": "Sim", "cancelButtonText": "Não"})
+                .then((result) => {
+                    if (result.isDismissed) {
+                        return;
+                    }
+                    this.clienteService.postCliente(this.cliente).subscribe(
+                        (response) => {
+                            Swal.fire('Sucesso', `Cliente ${this.cliente.id ? 'atualizado' : 'cadastrado'} com sucesso`, 'success');
+                            this.formGroup.reset();
+                            this.formGroup.markAsUntouched();
 
-                },
-                (error) => {
-                    console.log(error);
-                    Swal.fire('Erro', 'Ocorreu um erro ao cadastrar o cliente, tente novamente ou contate o suporte!', 'error');
-                },
-                () => {
-                    this.router.navigate(['/gerenciar-clientes']);
-                }
-            );
+                        },
+                        (error) => {
+                            console.log(error);
+                            Swal.fire('Erro', 'Ocorreu um erro ao cadastrar o cliente, tente novamente ou contate o suporte!', 'error');
+                        },
+                        () => {
+                            this.router.navigate(['/gerenciar-clientes']);
+                        }
+                    );
+                });
         } else {
             this.formInvalid = true;
             setTimeout(() => {

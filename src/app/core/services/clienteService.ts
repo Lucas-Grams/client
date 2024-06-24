@@ -30,4 +30,8 @@ export class ClienteService {
     deleteCliente(uuid?: string): Observable<ResponseDTO<string>>{
         return this.http.delete<ResponseDTO<string>>(`${environment.apiUrl}/clientes/${uuid}`);
     }
+
+    searchClients(search: string): Observable<ResponseDTO<Cliente[]>>{
+        return this.http.post<ResponseDTO<Cliente[]>>(`${environment.apiUrl}/clientes/search`, search);
+    }
 }
