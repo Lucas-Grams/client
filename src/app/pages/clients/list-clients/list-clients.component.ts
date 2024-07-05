@@ -55,9 +55,9 @@ export class ListClientsComponent implements OnInit {
             tags: this.tagService.getTags()
         }).subscribe({
             next: (result) => {
-                if (result.clientes.status === 'SUCCESS') {
-                    this.clientes = result.clientes.data;
-                    this.clienteSearch = result.clientes.data;
+                if (result.clientes) {
+                    this.clientes = result.clientes;
+                    this.clienteSearch = result.clientes;
                 }
                 if (result.tags.status === 'SUCCESS') {
                     this.tags = result.tags.data;
